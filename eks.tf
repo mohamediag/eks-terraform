@@ -4,6 +4,8 @@ module "eks" {
 
   cluster_name    = "${local.name}-al2023"
   cluster_version = "1.30"
+  cluster_endpoint_public_access           = true
+  enable_cluster_creator_admin_permissions = true
 
   # EKS Addons
   cluster_addons = {
@@ -19,7 +21,8 @@ module "eks" {
   eks_managed_node_groups = {
     example = {
       # Starting on 1.30, AL2023 is the default AMI type for EKS managed node groups
-      instance_types = ["m6i.large"]
+      instance_types = ["t3.medium"]
+
 
       min_size = 2
       max_size = 5
