@@ -2,3 +2,6 @@
 .terraform.lock.hcl
 .terraform/
 tmp/
+.terraform.tfstate.lock.info
+terraform.tfstate
+terraform.tfstate.backup
