@@ -15,14 +15,21 @@ module "eks" {
     vpc-cni                = {}
   }
 
-  vpc_id     = module.vpc.vpc_id
-  subnet_ids = module.vpc.private_subnets
+  vpc_id     = data.aws_vpc.default.id
+  subnet_ids = data.aws_subnets.subnets.ids
 
   eks_managed_node_groups = {
-    example = {
+    main_node_group = {
       # Starting on 1.30, AL2023 is the default AMI type for EKS managed node groups
       instance_types = ["t3.medium"]
 
+
+      //iam_role_additional_policies
+      iam_role_additional_policies = {
+        ec2fullAccess = "arn:aws:iam::aws:policy/AmazonEC2FullAccess",
+        elsblogqcess = "arn:aws:iam::aws:policy/ElasticLoadBalancingFullAccess"
+
+      }
 
       min_size = 2
       max_size = 5

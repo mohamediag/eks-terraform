@@ -4,8 +4,20 @@ provider "aws" {
 
 data "aws_availability_zones" "available" {}
 
+data "aws_vpc" "default" {
+  default = true
+}
+
+
+data "aws_subnets" "subnets" {
+  filter {
+    name = "vpc-id"
+    values = [data.aws_vpc.default.id]
+  }
+}
+
 locals {
-  name   = "ex-eks-mng"
+  name   = "eks-cluster"
   region = "eu-west-3"
 
   vpc_cidr = "10.0.0.0/16"
@@ -22,6 +34,7 @@ locals {
 # VPC
 ################################################################################
 
+/*
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "~> 5.0"
@@ -48,3 +61,4 @@ module "vpc" {
 
   tags = local.tags
 }
+*/
